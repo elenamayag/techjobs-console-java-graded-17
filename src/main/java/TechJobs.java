@@ -70,15 +70,15 @@ public class TechJobs {
         }
     }
 
-    // ﻿Returns the key of the selected item from the choices Dictionary
+    //Returns the key of the selected item from the choices Dictionary
     private static String getUserSelection(String menuHeader, HashMap<String, String> choices) {
 
         int choiceIdx = -1;
         Boolean validChoice = false;
         String[] choiceKeys = new String[choices.size()];
 
-        // Put the choices in an ordered structure so we can
-        // associate an integer with each one
+        // Put the choices in an ordered structure, so we can associate an integer with each one
+
         int i = 0;
         for (String choiceKey : choices.keySet()) {
             choiceKeys[i] = choiceKey;
@@ -91,7 +91,7 @@ public class TechJobs {
 
             // Print available choices
             for (int j = 0; j < choiceKeys.length; j++) {
-                System.out.println("" + j + " - " + choices.get(choiceKeys[j]));
+                System.out.println(j + " - " + choices.get(choiceKeys[j]));
             }
 
             if (in.hasNextInt()) {
@@ -120,19 +120,21 @@ public class TechJobs {
     // Print a list of jobs
     private static void printJobs(ArrayList<HashMap<String, String>> someJobs) {
 
-        if(null != someJobs && !someJobs.isEmpty()) {
-
-            for(HashMap<String, String> row : someJobs) {
+        if(someJobs.isEmpty()) {
+            System.out.print("No Results");
+        } else {
+            for(HashMap<String, String> job : someJobs) {
                 System.out.println("\n*****");
 
-                for (Map.Entry<String, String> set : row.entrySet()) {
-                    System.out.println(set.getKey() + ": " + set.getValue());
+                // using the Map.Entry for loop which acts as (0,(n))
+                // using the .entrySet to return the hash map
+
+                for (Map.Entry<String, String> item : job.entrySet()) {
+                    // iterates through the hashmap and prints whatever action
+                    System.out.println(item.getKey() + ": " + item.getValue());
                 }
                 System.out.println("*****");
             }
-        } else {
-            System.out.println("No Results");
-
         }
     }
 }

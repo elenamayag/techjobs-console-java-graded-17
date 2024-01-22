@@ -25,7 +25,7 @@ public class JobData {
      * without duplicates, for a given column.
      *
      * @param field The column to retrieve values from
-     * @return List of all of the values of the given field
+     * @return List of all the values of the given field
      */
     public static ArrayList<String> findAll(String field) {
 
@@ -42,6 +42,7 @@ public class JobData {
             }
         }
 
+        Collections.sort(values);
         return values;
     }
 
@@ -49,14 +50,14 @@ public class JobData {
 
         // load data, if not already loaded
         loadData();
+        ArrayList<HashMap<String, String>> allJobsCopy = new ArrayList<>(allJobs);
 
-        return allJobs;
+        return allJobsCopy;
     }
 
     /**
      * Returns results of search the jobs data by key/value, using
      * inclusion of the search term.
-     *
      * For example, searching for employer "Enterprise" will include results
      * with "Enterprise Holdings, Inc".
      *
@@ -75,11 +76,12 @@ public class JobData {
 
             String aValue = row.get(column);
 
-            if (aValue.contains(value)) {
-                jobs.add(row);
+            if (aValue.toLowerCase().contains(value.toLowerCase())) {
+                if (!jobs.contains(row)) {
+                    jobs.add(row);
+                }
             }
         }
-
         return jobs;
     }
 
@@ -98,13 +100,15 @@ public class JobData {
         // TODO - implement this method
 
         ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
-
+        // holds the keys in rows for all jobs
         for (HashMap<String, String> row : allJobs) {
-            for (HashMap.Entry<String, String>  job : row.entrySet()) {
+            for (String tempValue : row.values()) {
 
                 //makes case-insensitive
-                if(job.getValue().toLowerCase().contains(value.toLowerCase()) && !jobs.contains(row)) {
-                    jobs.add(row);
+                if(tempValue.toLowerCase().contains(value.toLowerCase())) {
+                    if (!jobs.contains(row)) {
+                        jobs.add(row);
+                    }
                 }
             }
         }
