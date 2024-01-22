@@ -76,6 +76,7 @@ public class JobData {
 
             String aValue = row.get(column);
 
+            //makes case-insensitive
             if (aValue.toLowerCase().contains(value.toLowerCase())) {
                 if (!jobs.contains(row)) {
                     jobs.add(row);
